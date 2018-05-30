@@ -1,0 +1,27 @@
+2 10/27 sprint1
+add frame 
+add spinButton
+add connecttion to robot
+
+
+1.5 10/30 sprint1
+add spin left button
+add random speed button for left and right wheels
+add random tone button for the buzzer
+
+2 10/31 sprint1
+def a function that control the robot in certain time and speed that plug in
+add two entries for people to plug in
+add button and labels
+
+2 11/1 sprint1
+I just try to figure out how to bind keys 
+
+2 11/2 sprint2
+I try to revise some of the problems
+
+2 11/3 sprint2
+add automatic song system and stop button
+
+2 11/7
+complete the random running process

@@ -1,0 +1,116 @@
+"""
+This file runs tests on a rosebot.
+Written by: Galluzzi.
+"""
+
+import rosebot.standard_rosebot as rb
+import tkinter
+from tkinter import ttk
+import time
+
+
+def main():
+    COM_PORT = 22  # REPLACE WITH YOUR COM PORT OR ROBOT NUMBER!!
+    WIRED = False  # Set to False if you would like to use wireless connection
+    "Connect to robot"
+    robot = rb.RoseBot()
+    if WIRED:
+        robot.connector.connect_wired(COM_PORT)
+    else:
+        robot.connector.connect_wireless(COM_PORT)
+    # print (robot.sensor_reader.button_sensor.is_pressed())
+    root = tkinter.Tk()
+    frame = ttk.Frame(root)
+    frame.grid()
+
+    "Show sensor values"
+    sensors = ttk.Button(frame, text="print sensors")
+    sensors['command'] = (lambda:sensor_display(robot))
+    sensors.grid()
+
+    "Activate motors"
+    motor = ttk.Button(frame, text="run motors")
+    motor['command'] = (lambda:motors(robot))
+    motor.grid()
+
+    "Blink LED"
+
+    led = ttk.Button(frame, text="flash led")
+    led['command'] = (lambda:blink(robot))
+    led.grid()
+
+    "Sing"
+    song = ttk.Button(frame, text="sing song")
+    song['command'] = (lambda:sing(robot))
+    song.grid()
+
+    "Disconnect"
+    disconnect = ttk.Button(frame, text='disconnect')
+    disconnect['command'] = (lambda:robot.connector.disconnect())
+    disconnect.grid()
+
+    root.mainloop()
+
+def sensor_display(robot):
+    """
+    :type robot: rb.Rosebot
+    """
+    print("Sensor values are: ")
+    print("Button press: ", robot.sensor_reader.button_sensor.is_pressed())
+    left_proximity_raw = robot.sensor_reader.left_proximity_sensor.read()
+    center_proximity_raw = robot.sensor_reader.front_proximity_sensor.read()
+    right_proximity_raw = robot.sensor_reader.right_proximity_sensor.read()
+    print("Proximity sensors:\nL", left_proximity_raw,
+          "C", center_proximity_raw,
+          "R", right_proximity_raw)
+    left_bump = robot.sensor_reader.left_bump_sensor.is_pressed()
+    right_bump = robot.sensor_reader.right_bump_sensor.is_pressed()
+    print("Bump sensors:\nL", left_bump, "R", right_bump)
+    left_reflectance = robot.sensor_reader.left_reflectance_sensor.read()
+    center_reflectance = robot.sensor_reader.middle_reflectance_sensor.read()
+    right_reflectance = robot.sensor_reader.right_reflectance_sensor.read()
+    print("Reflectance sensors:\nL", left_reflectance,
+          "C", center_reflectance,
+          "R", right_reflectance)
+
+def motors(robot):
+    print("Left wheel only.")
+    robot.motor_controller.left_wheel_pwm(100)
+    time.sleep(1)
+    print("Right wheel only.")
+    robot.motor_controller.right_wheel_pwm(100)
+    time.sleep(1)
+    print("Stopping")
+    robot.motor_controller.stop()
+    time.sleep(1)
+    print("Both wheels")
+    robot.motor_controller.drive_pwm(100, 100)
+    time.sleep(1)
+    print("Curving")
+    robot.motor_controller.drive_pwm(100, 120)
+    time.sleep(1)
+    print("Stopping")
+    robot.motor_controller.stop()
+
+def blink(robot):
+    print("Flashing LED")
+    for _ in range(10):
+        robot.led.turn_on()
+        time.sleep(.5)
+        robot.led.turn_off()
+        time.sleep(.5)
+
+def sing(robot):
+    print("Singing")
+    octave = [37, 39, 41, 43, 45, 47, 49, 51]
+    for note in octave:
+        robot.buzzer.play_tone(note)
+        time.sleep(.5)
+    robot.buzzer.stop()
+
+#-----------------------------------------------------------------------
+# If this module is running at the top level (as opposed to being
+# imported by another module), then call the 'main' function.
+#-----------------------------------------------------------------------
+if __name__ == '__main__':
+    main()

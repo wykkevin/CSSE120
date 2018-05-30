@@ -1,0 +1,230 @@
+"""
+Test 2, problem 1.
+
+Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
+         their colleagues and Yuankai Wang.  October 2016.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
+
+import time
+import sys
+import rosegraphics as rg
+
+
+def main():
+    """ Calls the   TEST   functions in this module. """
+    test_problem1a()
+    test_problem1b()
+
+
+def test_problem1a():
+    """ Tests the   problem1a   function. """
+    # ------------------------------------------------------------------
+    # DONE: 2. Implement this TEST function.
+    #   It TESTS the   problem1a   function defined below.
+    #   Include at least  **   3 reasonable  **  tests.
+    # ------------------------------------------------------------------
+    print()
+    print('--------------------------------------------------')
+    print('Testing the   problem1a   function:')
+    print('--------------------------------------------------')
+
+    # Test 1
+    pointlist = [rg.Point(1, 1), rg.Point(2, 2), rg.Point(3, 3),
+                 rg.Point(4, 4), rg.Point(5, 5)]
+    print('Expected:', 15)
+    print('Actual:', problem1a(pointlist))
+
+    # Test 2
+    pointlist = [rg.Point(13, 21), rg.Point(33, 8), rg.Point(300, 1),
+                 rg.Point(74, 12), rg.Point(74, 18)]
+    print('Expected:', 60)
+    print('Actual:', problem1a(pointlist))
+
+    # Test 3
+    pointlist = [rg.Point(0, 0), rg.Point(0.1, 0.3), rg.Point(3, 3.7),
+                 rg.Point(54, 2.0), rg.Point(7, 1.1)]
+    print('Expected:', 7.1)
+    print('Actual:', problem1a(pointlist))
+
+
+def problem1a(points):
+    """
+    What comes in:  A sequence of rg.Point objects.
+    What goes out:
+      Returns the sum of the y-coordinates of the rg.Point objects.
+    Side effects: None.
+    Examples:
+      If the sequence is a list containing these 5 rg.Points:
+        rg.Point(5, 10)
+        rg.Point(2, 20)
+        rg.Point(7, 13)
+        rg.Point(10, 400)
+        rg.Point(2, 50)
+      then this function returns:
+        10 + 20 + 13 + 400 + 50, which is 493.
+    Type hints:
+      :type sequence: [rg.Point]
+    """
+    # ------------------------------------------------------------------
+    # DONE: 3. Implement and test this function.
+    #          You should write its TEST function first (above).
+    # ------------------------------------------------------------------
+
+    ysum = 0
+    for k in range (len(points)):
+        ysum = ysum + points[k].y
+    return ysum
+
+def test_problem1b():
+    print()
+    print('--------------------------------------------------')
+    print('Testing the   problem1b   function:')
+    print('--------------------------------------------------')
+
+    # Test 1:
+    print()
+    list1 = []
+    expected = 'Not found'
+    actual = problem1b(list1, 3)
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 2:
+    print()
+    list2 = [10]
+    expected = 'Not found'
+    actual = problem1b(list2, 3)
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 3:
+    print()
+    list3 = [10, 2, 8]
+    expected = 'Not found'
+    actual = problem1b(list3, 4)
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 4:
+    print()
+    list4 = [8, 5, 2, 19, 45, 2, 18, 0, -4, 55]
+    expected = 55
+    actual = problem1b(list4, 40)
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 5:
+    print()
+    list5 = [8, 5, 2, 19, 45, 2, 18, 0, -4, 55, 68]
+    expected = 55
+    actual = problem1b(list5, 40)
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 6:
+    print()
+    list5 = [8, 55, 2, 19, 45, 2, 18, 0, -4, 55, 68]
+    expected = 55
+    actual = problem1b(list5, 54)
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 7:
+    print()
+    list5 = [8, 55, 2, 19, 45, 2, 18, 0, -4, 55, 68]
+    expected = 'Not found'
+    actual = problem1b(list5, 55)
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+
+def problem1b(sequence, number):
+    """
+    What comes in:
+      -- A sequence of numbers.
+      -- A number.
+    What goes out:
+      Returns the first (leftmost) number in the given sequence that is:
+        -- At an odd-numbered index (i.e., index 1 or 3 or 5 or ...),
+             and
+        -- Greater than the given number.
+      Returns the string   'Not found'   if there is no such number
+        in the sequence.
+    Side effects: None
+    Examples:
+        If the sequence   is [10, 3, 4] and   the given   number   is 4,
+          then this function should return 'Not found' because the only
+          number at an odd numbered index (3) is not greater than 4.
+        If the sequence is [] and the given number is 3, then this function
+          should return 'Not found' because there is no number at an odd
+          index that is greater than 3.
+        If the sequence is [40] and the given number is 30, then this
+          function should return 'Not found' because there is no number
+          at an odd index.
+        If the sequence is [0, 10, 30, 25] and the given number is 20,
+          then this function should return 25 because it is the first
+          number at an odd index (index 3) that is greater than 20.
+
+    Type hints:
+      :type sequence: [float]
+      :type number: float
+    """
+    # ------------------------------------------------------------------
+    # DONE: 4. Implement and test this function.
+    #          Tests have been written for you (above).
+    # ------------------------------------------------------------------
+
+    for k in range (len(sequence)):
+        if sequence[k] > number:
+            if k % 2 == 1:
+                return sequence[k]
+    return 'Not found'
+
+
+# ----------------------------------------------------------------------
+# Students: Our tests use the following to print error messages in red.
+# Do NOT change it.  You do NOT have to do anything with it.
+# ----------------------------------------------------------------------
+def print_failure_message(message='  *** FAILED the above test. ***',
+                          flush_time=1.0):
+    """ Prints a message onto stderr, hence in RED. """
+    time.sleep(flush_time)
+    print(message,
+          file=sys.stderr, flush=True)
+    time.sleep(flush_time)
+
+# ----------------------------------------------------------------------
+# Calls  main  to start the ball rolling.
+# ----------------------------------------------------------------------
+main()
+
+
+

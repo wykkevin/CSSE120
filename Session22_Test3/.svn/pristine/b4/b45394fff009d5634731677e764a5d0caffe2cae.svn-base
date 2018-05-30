@@ -1,0 +1,431 @@
+"""
+Test 3, problem 3.
+
+Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
+         their colleagues and PUT_YOUR_NAME_HERE.  October 2016.
+"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+import time
+import sys
+
+
+def main():
+    """ Calls the   TEST   functions in this module. """
+    test_problem3a()
+    test_problem3b()
+    test_problem3c()
+
+
+def test_problem3a():
+    """ Tests the    problem3a    function. """
+    print()
+    print('--------------------------------------------------')
+    print('Testing the   problem3a   function:')
+    print('--------------------------------------------------')
+
+    # Test 1:
+    print()
+    list1 = [('once', 'upon', 'gargoyle', 'funny'),
+             ('hello', 'goodbye', 'teacher'),
+             ('funny', 'sad', 'fetish'),
+             [],
+             ['ok'],
+             ('nope', 'yep', '')
+            ]
+    expected = 2
+    actual = problem3a(list1, 'sad')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 2:
+    print()
+    list1 = [('once', 'upon', 'gargoyle', 'funny'),
+             ('hello', 'goodbye', 'teacher'),
+             ('funny', 'sad', 'fetish'),
+             [],
+             ['ok'],
+             ('nope', 'yep', '')
+            ]
+    expected = 0
+    actual = problem3a(list1, 'funny')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 3:
+    print()
+    list1 = [('once', 'upon', 'gargoyle', 'funny'),
+             ('hello', 'goodbye', 'teacher'),
+             ('funny', 'sad', 'fetish'),
+             [],
+             ['ok'],
+             ('nope', 'yep', '')
+            ]
+    expected = 5
+    actual = problem3a(list1, 'yep')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+
+    # Test 4:
+    print()
+    list1 = [('once', 'upon', 'gargoyle', 'funny'),
+             ('hello', 'goodbye', 'teacher'),
+             ('funny', 'sad', 'fetish'),
+             [],
+             ['ok'],
+             ('nope', 'yep', '')
+            ]
+    expected = -1
+    actual = problem3a(list1, 'good')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+
+    # Test 5:
+    print()
+    list1 = [('once', 'upon', 'gargoyle', 'funny'),
+             ('hello', 'goodbye', 'teacher'),
+             ('funny', 'sad', 'fetish'),
+             [],
+             ['ok'],
+             ('nope', 'yep', '')
+            ]
+    expected = 5
+    actual = problem3a(list1, '')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 6:
+    print()
+    list1 = [('once', 'upon', 'gargoyle', 'funny'),
+             ('hello', 'goodbye', 'teacher'),
+             ('funny', 'sad', 'fetish'),
+             [],
+             ['ok'],
+             ('nope', 'yep', 'goodbye')
+            ]
+    expected = 1
+    actual = problem3a(list1, 'goodbye')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 7, with a NEW list:
+    print()
+    list2 = [('one', 'two', 'three', 'four'),
+             ('five', 'six', 'seven'),
+            ]
+    expected = 1
+    actual = problem3a(list2, 'six')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 8, with the NEW list:
+    print()
+    list2 = [('one', 'two', 'three', 'four'),
+             ('five', 'six', 'seven'),
+            ]
+    expected = 0
+    actual = problem3a(list2, 'one')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 9, with the NEW list:
+    print()
+    list2 = [('one', 'two', 'three', 'four'),
+             ('five', 'six', 'seven'),
+            ]
+    expected = 0
+    actual = problem3a(list2, 'four')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+    # Test 10, with the NEW list:
+    print()
+    list2 = [('one', 'two', 'three', 'four'),
+             ('five', 'six', 'seven'),
+            ]
+    expected = -1
+    actual = problem3a(list2, 'eight')
+    print("Expected:", expected)
+    print("Actual:", actual)
+    if expected == actual:
+        print("Test passed SUCCESSFULLY!")
+    else:
+        print_failure_message()
+
+
+def problem3a(sequence_of_sequences, word_to_look_for):
+    """
+    What comes in:
+      -- A sequence of subsequences,
+           where each subsequence contains only words (i.e., strings).
+      -- A word_to_look_for
+    What goes out:
+      Returns the index in the outer sequence of the first
+      (leftmost) subsequence that contains the given word_to_look_for,
+      or -1 if no subsequence contains the given word_to_look_for.
+    Side effects: None.
+    Examples:
+      Suppose that the given sequence is:
+         [('once', 'upon', 'gargoyle', 'funny'),
+          ('hello', 'goodbye', 'teacher'),
+          ('funny', 'sad', 'fetish'),
+          [],
+          ['ok'],
+          ('nope', 'yep', '')
+         ]
+      Then:
+        If the  word_to_look_for  is 'sad', this function returns 2.
+        If the  word_to_look_for  is 'funny', this function returns 0.
+        If the  word_to_look_for  is 'yep', this function returns 5.
+        If the  word_to_look_for  is 'good', this function returns -1.
+        If the  word_to_look_for  is '', this function returns 5.
+        If the  word_to_look_for  is 'goodbye', this function returns 1.
+    Type hints:
+      :type sequence_of_sequences: sequence of sequences of strings
+      :type word_to_look_for:      str
+    """
+    # ------------------------------------------------------------------
+    # TODO: 2. Implement and test this function.
+    #          Tests have been written for you (above).
+    #
+    # IMPLEMENTATION RESTRICTION:
+    #   ** You may NOT use anything but comparison (==) in judging
+    #      membership.  In particular, you may NOT use:
+    #        -- the IN operator
+    #              (example:  7 in [9, 6, 7, 9] returns True)
+    #        -- the COUNT method
+    #              (example:  [9, 6, 7, 9].count(9) returns 2)
+    #        -- the INDEX method
+    #              (example:  [9, 6, 7, 9, 6, 1].index(6) returns 1)
+    # ------------------------------------------------------------------
+
+    for k in range (len(sequence_of_sequences)):
+        for i in range (len(sequence_of_sequences[k])):
+            if sequence_of_sequences[k][i] == word_to_look_for:
+                return k
+    return -1
+
+
+def test_problem3b():
+    """ Tests the    problem3b    function. """
+    print()
+    print('--------------------------------------------------')
+    print('Testing the   problem3b   function:')
+    print('You produce your own tests via the INPUT that you supply.')
+    print('--------------------------------------------------')
+
+    # ------------------------------------------------------------------
+    # To do a test, run this function (test_problem3b) and enter
+    # some word as the input.  Then see whether or not the problem3b
+    # function accepted input and printed the correct result
+    # for that input.
+
+    # Repeat the test as many times as you need to be confident
+    # that your code is correct.
+    # ------------------------------------------------------------------
+    list1 = [('once', 'upon', 'gargoyle', 'funny'),
+             ('hello', 'goodbye', 'teacher'),
+             ('funny', 'sad', 'fetish'),
+             [],
+             ['ok'],
+             ('nope', 'yep', '')
+            ]
+    problem3b(list1)  # Runs the test, using list1 defined above.
+
+
+def problem3b(sequence_of_sequences):
+    """
+    What comes in:
+      -- A sequence of subsequences,
+           where each subsequence contains only words (i.e., strings)
+           (just as in problem3a).
+    What goes out:
+      Returns the index in the outer sequence of the first
+      (leftmost) subsequence that contains the given word_to_look_for,
+      or -1 if no subsequence contains the given word_to_look_for.
+    Side effects:
+      Prompts for and gets a word (that is, a string) from the Console.
+      If a subsequence of the sequence contains the word that the
+      user inputs (i.e., the word that the user types in the Console),
+      then this function prints a message that indicates the index
+      in the outer sequence of the first (leftmost) such subsequence,
+      or -1 if no subsequence contains the word that the user input.
+    Examples:
+      Suppose that the given sequence is:
+         [('once', 'upon', 'gargoyle', 'funny'),
+          ('hello', 'goodbye', 'teacher'),
+          ('funny', 'sad', 'fetish'),
+          [],
+          ['ok'],
+          ('nope', 'yep', '')
+         ]
+      Here are THREE sample runs, given the above sequence, where
+      what the user types is to the right of space after the colon:
+
+      This is ONE run:
+        Enter a word: sad
+        That word is at index 2.
+
+      This is ANOTHER run:
+        Enter a word: good
+        That word is not in any of the subsequences.
+
+      Enter a word: yep
+      That word is at index 5.
+
+    Type hints:
+      :type sequence_of_sequences: sequence of sequences of strings
+    """
+    # ------------------------------------------------------------------
+    # TODO: 3. Implement and test this function.
+    #          Tests have been written for you (above).
+    #
+    # IMPLEMENTATION RESTRICTION: same as for problem3a.
+    #
+    # IMPORTANT: For full credit, you must use (call) the function
+    #   problem3a   that you implemented above.
+    # ------------------------------------------------------------------
+
+
+def test_problem3c():
+    """ Tests the    problem3c    function. """
+    print()
+    print('--------------------------------------------------')
+    print('Testing the   problem3c   function:')
+    print('You produce your own tests via the INPUT that you supply.')
+    print('--------------------------------------------------')
+
+    # ------------------------------------------------------------------
+    # To do a test, run this function (test_problem3c) and enter
+    # some word as the input.  Then see whether or not the problem3c
+    # function accepted input and printed the correct result
+    # for that input.
+
+    # Repeat the test as many times as you need to be confident
+    # that your code is correct.
+    # ------------------------------------------------------------------
+    list1 = [('once', 'upon', 'gargoyle', 'funny'),
+             ('hello', 'goodbye', 'teacher'),
+             ('funny', 'sad', 'fetish'),
+             [],
+             ['ok'],
+             ('nope', 'yep', '')
+            ]
+    problem3c(list1)  # Runs the test, using list1 defined above.
+
+
+def problem3c(sequence_of_sequences):
+    """
+    What comes in:
+      -- A sequence of subsequences,
+           where each subsequence contains only words (i.e., strings)
+           (just as in problem3a).
+    What goes out:  Nothing (i.e., None).
+    Side effects:
+      Prompts for and gets a word (that is, a string) from the Console.
+      If a subsequence of the sequence contains the word that the
+      user inputs (i.e., the word that the user types in the Console),
+      then this function prints a message that indicates the index
+      in the outer sequence of the first (leftmost) such subsequence,
+      and the program ends.
+
+      But if no subsequence contains the word that the user input,
+      then the program prints a message indicating so,
+        ** and says "Try again." and gives the user the opportunity
+        to enter another word.
+
+      The program ends when the user finally enters a word that
+      appears in at least one of the subsequences of the given sequene.
+    Examples:
+      Suppose that the given sequence is:
+         [('once', 'upon', 'gargoyle', 'funny'),
+          ('hello', 'goodbye', 'teacher'),
+          ('funny', 'sad', 'fetish'),
+          [],
+          ['ok'],
+          ('nope', 'yep', '')
+         ]
+      Here is ONE sample run, given the above sequence, where
+      what the user types is to the right of space after the colon:
+
+      Enter a word: nothing
+      That word is not in any of the subsequences.
+      Try again.
+
+      Enter a word: good
+      That word is not in any of the subsequences.
+      Try again.
+
+      Enter a word: roses
+      That word is not in any of the subsequences.
+      Try again.
+
+      Enter a word: sad
+      That word is at index 2.
+
+    Type hints:
+      :type sequence_of_sequences: sequence of sequences of strings
+    """
+    # ------------------------------------------------------------------
+    # TODO: 4. Implement and test this function.
+    #          Tests have been written for you (above).
+    #
+    # IMPLEMENTATION RESTRICTION: same as for problem3a.
+    #
+    # IMPORTANT: For full credit, you must use (call) the APPROPRIATE
+    #   function(s) that you implemented above.
+    # ------------------------------------------------------------------
+
+
+# ----------------------------------------------------------------------
+# Students: Our tests use the following to print error messages in red.
+# Do NOT change it.  You do NOT have to do anything with it.
+# ----------------------------------------------------------------------
+def print_failure_message(message='  *** FAILED the above test. ***',
+                          flush_time=1.0):
+    """ Prints a message onto stderr, hence in RED. """
+    time.sleep(flush_time)
+    print(message,
+          file=sys.stderr, flush=True)
+    time.sleep(flush_time)
+
+# ----------------------------------------------------------------------
+# Calls  main  to start the ball rolling.
+# ----------------------------------------------------------------------
+main()

@@ -1,0 +1,54 @@
+-- VERSION_4
+-- START DISKCACHE_2
+C:\EclipseWorkspaces\csse120\.metadata\.plugins\org.eclipse.core.resources\.projects\Session10_MoreImplementingClasses\com.python.pydev.analysis\v2_indexcache
+m1t_test_Line|1474569276072114000|C:\EclipseWorkspaces\csse120\Session10_MoreImplementingClasses\src\m1t_test_Line.py
+m1_Line|1474571541030421000|C:\EclipseWorkspaces\csse120\Session10_MoreImplementingClasses\src\m1_Line.py
+-- END DISKCACHE
+-- START DICTIONARY
+8
+4=Line
+1=m1t_test_Line
+8=Point.__init__
+5=Line.__init__
+7=Line.reverse
+6=Line.clone
+3=Point
+2=m1_Line
+-- END DICTIONARY
+-- START TREE 1
+9
+end|1|end_test!10@
+eva|1|evaluate_test!10@
+is_|2|is_a_number!10@is_implemented!10@
+lin|1|Line!17@
+mai|2|main!18@main!10@
+poi|1|Point!17@
+pri|1|print_failure!10@
+sta|1|start_test!10@
+tes|22|test_get_number_of_clones!10@test_length!18@test_midpoint!18@test_midpoint!10@test_get_number_of_clones!18@test_clone!10@test_line_minus!10@test_init!18@test_init!10@test_clone!18@test_line_minus!18@test_slope!10@test_is_parallel!18@test_length!10@test_line_plus!10@test_slope!18@test_is_parallel!10@test_reverse!18@test_reset!18@test_reset!10@test_line_plus!18@test_reverse!10@
+-- END TREE
+-- START TREE 2
+22
+__e|2|__eq__!3&18@__eq__!4&18@
+__i|2|__init__!3&18@__init__!4&18@
+__r|2|__repr__!3&18@__repr__!4&18@
+clo|2|clone!3&18@clone!4&18@
+cou|2|countofclones!5&19@countofclones!6&19@
+dis|1|distance_from!3&18@
+end|2|end!5&19@end!7&19@
+get|1|get_number_of_clones!4&18@
+hal|1|halfway_to!3&18@
+inp|2|inpy!5&19@inpx!5&19@
+is_|1|is_parallel!4&18@
+len|1|length!4&18@
+lin|2|line_minus!4&18@line_plus!4&18@
+mid|1|midpoint!4&18@
+min|1|minus!3&18@
+plu|1|plus!3&18@
+res|1|reset!4&18@
+rev|1|reverse!4&18@
+slo|1|slope!4&18@
+sta|2|start!5&19@start!7&19@
+x|1|x!8&19@
+y|1|y!8&19@
+-- END TREE

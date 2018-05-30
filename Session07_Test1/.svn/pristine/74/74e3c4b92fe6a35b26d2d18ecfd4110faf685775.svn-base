@@ -1,0 +1,97 @@
+"""
+Test 1, problem 2.
+
+Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
+         their colleagues and Yuankai Wang.  September 2016.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
+
+import rosegraphics as rg
+
+
+def main():
+    """ Calls the   TEST   functions in this module. """
+    test_problem2()
+
+
+def test_problem2():
+    """ Tests the   problem2  function. """
+    print()
+    print('--------------------------------------------------')
+    print('Testing the  problem2  function:')
+    print('  See the graphics windows that pop up.')
+    print('--------------------------------------------------')
+
+    # TWO tests on ONE window.
+    title = 'Tests 1, 2 & 3 of problem2: Makes square plus signs from'
+    title += ' red, green and blue squares'
+    win1 = rg.RoseWindow(700, 400, title)
+
+    # Test 1:
+    square1 = rg.Rectangle(rg.Point(175, 100), rg.Point(225, 150))
+    square1.fill_color = 'red'
+    problem2(square1, win1)
+
+    # Test 2:
+    square2 = rg.Rectangle(rg.Point(385, 300), rg.Point(355, 270))
+    square2.fill_color = 'green'
+    problem2(square2, win1)
+
+    # Test 3:
+    square3 = rg.Rectangle(rg.Point(550, 125), rg.Point(450, 225))
+    square3.fill_color = 'blue'
+    problem2(square3, win1)
+
+    win1.close_on_mouse_click()
+
+    # A fourth test on ANOTHER window.
+    title = 'Test 4 of problem2: from'
+    title += ' pink square'
+    win2 = rg.RoseWindow(300, 300, title)
+
+    # Test 4:
+    square4 = rg.Rectangle(rg.Point(180, 180), rg.Point(120, 120))
+    square4.fill_color = 'pink'
+    problem2(square4, win2)
+
+    win2.close_on_mouse_click()
+
+
+def problem2(center_square, window):
+    """
+    See   problem2_picture.pdf   in this project for pictures
+    that may help you better understand the following specification:
+
+    What comes in:
+      -- An rg.Rectangle whose width and height are the same
+           (so that it appears as a square).
+      -- An rg.RoseWindow.
+    What goes out:  Nothing (i.e., None).
+    Side effects:
+      -- Draws the given rg.Rectangle on the given rg.RoseWindow,
+         along with 4 other rg.Rectangles that:
+           -- Have the same width and height as the given rg.Rectangle
+           -- Have outline_color that is the same as the fill_color
+                of the given rg.Rectangle
+           -- Appear immediately above, below, to the left, and
+                to the right of the given rg.Rectangle, respectively.
+                (See  problem2_picture.pdf  for a picture of this.)
+      Must  ** NOT close **   the window.
+
+    Type hints:
+      :type center_square:  rg.Rectangle
+      :type window:         rg.RoseWindow
+    """
+    # ------------------------------------------------------------------
+    # TODO: 2. Implement and test this function.
+    #          Tests have been written for you (above).
+    # ------------------------------------------------------------------
+
+    center_square.attach_to(window)
+    point1 = center_square.get_upper_left_corner()
+    point11 = rg.Point(center_square.get_upper_right_corner().x, center_square.get_upper_right_corner().y)
+
+    window.render()
+
+
+
+main()

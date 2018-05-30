@@ -1,0 +1,231 @@
+"""
+The Python Capstone Project.
+
+CSSE 120 - Introduction to Software Development.
+Team members: PUT-YOUR-NAMES_HERE (all of them).
+
+The primary author of this module is: CHEN XIANGBEI,LIU YUSHAN,WANG YUANKAI,
+YANG JINGJING.
+"""
+# DONE: Put the names of ALL team members in the above where indicated.
+#       Put YOUR NAME in the above where indicated.
+
+import m0
+import m2
+import m3
+import m4
+
+import tkinter
+from tkinter import ttk
+import rosebot.standard_rosebot as rb
+import time
+import math
+
+
+def my_frame(root, dc):
+    """
+    Constructs and returns a   ttk.Frame   on the given root window.
+    The frame contains all of this module's widgets.
+    Does NOT   grid   the Frame, since the caller will do that.
+    Also sets up callbacks for this module's widgets.
+
+    The first argument is the  root  window (a tkinter.Tk object)
+    onto which the   ttk.Frame  returned from this function
+    will be placed.  The second argument is the shared DataContainer
+    object that is CONSTRUCTED in m0 but USED in m1, m2, m3 and m4.
+
+    Preconditions:
+      :type root: tkinter.Tk
+      :type dc:   m0.DataContainer
+      
+    """
+
+    Frame = ttk.Frame(root, padding=60)
+
+
+    connect_button = ttk.Button(Frame, text='connect')
+    connect_button.grid()
+    connect_button['command'] = (lambda:
+                        connect(dc.robot, entry_pin))
+
+    label1 = ttk.Label(Frame)
+    label1['text'] = 'The speed of the left wheel is ' + str(dc.robot.motor_controller.left_motor_pwm)
+    label1.grid()
+
+    plus_1_button = ttk.Button(Frame, text='plus 1')
+    plus_1_button.grid()
+    plus_1_button['command'] = (lambda:plus_1(dc.robot))
+
+    LED_on_button = ttk.Button(Frame, text='LED ON')
+    LED_on_button.grid()
+    LED_on_button['command'] = (lambda:robot_LDE_on(dc.robot))
+
+    label2 = ttk.Label(Frame)
+    label2['text'] = ('The pin')
+    label2.grid()
+    entry_pin = ttk.Entry(Frame, width=8)
+    entry_pin.grid()
+#Feature4 RUN------------------------------------------------------------------------------
+
+    label3 = ttk.Label(Frame)
+    label3['text'] = ('The entry speed')
+    label3.grid()
+    entry_speed = ttk.Entry(Frame, width=6)
+    entry_speed.grid()
+
+    label4 = ttk.Label(Frame)
+    label4['text'] = ('The entry distance')
+    label4.grid()
+    entry_distance = ttk.Entry(Frame, width=6)
+    entry_distance.grid()
+
+#     label5 = ttk.Label(Frame)
+#     label5['text'] = ('The entry direction')
+#     label5.grid()
+#     entry_direction = ttk.Entry(Frame, width=6)
+#     entry_direction.grid()
+
+    RUN_button = ttk.Button(Frame, text='RUN')
+    RUN_button.grid()
+    RUN_button['command'] = (lambda:RUN(dc.robot, entry_speed,
+                                         entry_distance))
+#Disconnect--------------------------------------------------------------------------
+
+    disconnect_button = ttk.Button(Frame, text='disconnect')
+    disconnect_button.grid()
+    disconnect_button['command'] = (lambda:
+                        disconnect(dc.robot))
+# Feature 10 spin---------------------------------------------------------------------
+
+
+# speed
+
+    label6 = ttk.Label(Frame)
+    label6['text'] = ('The entry speed of left wheel')
+    label6.grid()
+    entry_speed_left = ttk.Entry(Frame, width=6)
+    entry_speed_left.grid()
+
+    label7 = ttk.Label(Frame)
+    label7['text'] = ('The entry speed of right wheel')
+    label7.grid()
+    entry_speed_right = ttk.Entry(Frame, width=6)
+    entry_speed_right.grid()
+# angel
+    label8 = ttk.Label(Frame)
+    label8['text'] = ('The entry angel')
+    label8.grid()
+    entry_angle = ttk.Entry(Frame, width=6)
+    entry_angle.grid()
+#
+#     label9 = ttk.Label(Frame)
+#     label9['text'] = ('The entry angel of right wheel')
+#     label9.grid()
+#     entry_angle_right = ttk.Entry(Frame, width=6)
+#     entry_angle_right.grid()
+# radius
+    label10 = ttk.Label(Frame)
+    label10['text'] = ('The entry radius of robot')
+    label10.grid()
+    entry_radius = ttk.Entry(Frame, width=6)
+    entry_radius.grid()
+
+# SPIN
+    SPIN_button = ttk.Button(Frame, text='SPIN')
+    SPIN_button.grid()
+
+    SPIN_button['command'] = (lambda:SPIN(dc.robot,
+                                          entry_speed_left, entry_speed_right,
+                                          entry_angle, entry_radius))
+
+#Wireless------------------------------------------------------------------------------------------
+    label11 = ttk.Label(Frame)
+    label11['text'] = ('The wireless pin')
+    label11.grid()
+    entry_wirelesspin = ttk.Entry(Frame, width=8)
+    entry_wirelesspin.grid()
+
+
+    wireless_connect_button = ttk.Button(Frame, text='wireless connect')
+    wireless_connect_button.grid()
+    wireless_connect_button['command'] = (lambda:
+                        wirelessconnect(dc.robot, entry_wirelesspin))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return Frame
+
+def connect(robot, entrypin):
+    '''
+    :type robot:rb '''
+    P = int(entrypin.get())
+
+    robot.connector.connect(P)
+
+def plus_1(robot):
+
+    robot.motor_controller.left_motor_pwm = robot.motor_controller.left_motor_pwm + 1
+    robot.motor_controller.right_motor_pwm = robot.motor_controller.right_motor_pwm + 1
+
+    print('The speed is:', robot.motor_controller.left_motor_pwm)
+
+def robot_LDE_on(robot):
+    robot.led.turn_on()
+    print('Robot Led On')
+
+def RUN(robot, entryspeed, entrydistance):
+    A = int(entryspeed.get())
+    # C = entrydirection
+    print(A)
+    robot.motor_controller.drive_pwm(A, A)
+    # robot.motor_controller.angle(C)
+    B = abs(((int(entrydistance.get())) / (int(entryspeed.get()))))
+
+    time.sleep(B)
+    robot.motor_controller.stop()
+
+def disconnect(robot):
+    robot.motor_controller.disconnect()
+
+def SPIN(robot, speed_left, speed_right, enterangle, entryradius):
+    Leftspeed = int(speed_left.get())
+    Rightspeed = int(speed_right.get())
+    Radius = int(entryradius.get())
+    angle = int(enterangle.get())
+
+    robot.motor_controller.drive_pwm(Leftspeed, Rightspeed)
+    time1 = int(Radius * angle / (57.3 * Leftspeed))
+    time.sleep(time1)
+    robot.motor_controller.stop()
+
+def wirelessconnect(robot, entrywirelesspin):
+    Wirelesspin = int(entrywirelesspin.get())
+    robot.connector.connect_wireless(Wirelesspin)
+
+
+
+
+
+
+
+
+
+
+# ----------------------------------------------------------------------
+# If this module is running at the top level (as opposed to being
+# imported by another module), then call the 'main' function.
+# ----------------------------------------------------------------------
+if __name__ == '__main__':
+    m0.main()

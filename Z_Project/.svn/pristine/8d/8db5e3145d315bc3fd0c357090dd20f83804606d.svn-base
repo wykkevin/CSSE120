@@ -1,0 +1,105 @@
+"""
+The Python Capstone Project.
+
+CSSE 120 - Introduction to Software Development.
+Team members: PUT-YOUR-NAMES_HERE CHEN XIANGBEI, LIU YUSHAN , WANG YUANKAI, and YANG JINGJING.
+
+The primary author of this module is: YANG JINGJING .
+"""
+# DONE: Put the names of ALL team members in the above where indicated.
+#       Put YOUR NAME in the above where indicated.
+
+import m0
+import m1
+import m2
+import m3
+
+import tkinter
+from tkinter import ttk
+import rosebot.standard_rosebot as rb
+
+
+
+
+def my_frame(root, dc):
+    """
+    Constructs and returns a   ttk.Frame   on the given root window.
+    The frame contains all of this module's widgets.
+    Does NOT   grid   the Frame, since the caller will do that.
+    Also sets up callbacks for this module's widgets.
+
+    The first argument is the  root  window (a tkinter.Tk object)
+    onto which the   ttk.Frame  returned from this function
+    will be placed.  The second argument is the shared DataContainer
+    object that is CONSTRUCTED in m0 but USED in m1, m2, m3 and m4.
+
+    Preconditions:
+      :type root: tkinter.Tk
+      :type dc:   m0.DataContainer
+    """
+
+    frame1 = ttk.Frame(root, padding=40, relief="raised")
+    forwardButton = ttk.Button(frame1, text="forward")
+    forwardButton.grid()
+    forwardButton['command'] = (lambda:
+                              forward(dc.robot))
+    label1 = ttk.Label(frame1)
+    label1['text'] = 'The velocity of right wheel is ' + str(dc.robot.motor_controller.right_motor_pwm)
+    label1.grid()
+
+    mius1_button = ttk.Button(frame1, text='miuns1')
+    mius1_button.grid()
+    mius1_button['command'] = lambda:mius1(dc.robot)
+
+    led_turndown_button = ttk.Button(frame1, text="LED OFF")
+    led_turndown_button.grid()
+    led_turndown_button['command'] = lambda:led_turndown(dc.robot)
+
+    readingcontents_button = ttk.Button(frame1, text="contents")
+    readingcontents_button.grid()
+    readingcontents_button['command'] = lambda:reading_contents()
+
+    sumhours_button = ttk.Button(frame1, text="sum of hours")
+    sumhours_button.grid()
+    sumhours_button['command'] = lambda:sum_hours()
+
+
+    return frame1
+
+
+def sum_hours():
+    'sum hours'
+    total = 0
+    for k in range(1, 5):
+        f = open('../process/hours-' + str(k) + '.txt')
+        for line in f:
+            try:
+                total += int(line[0])
+            except:
+                print(end='')
+    print(total)
+
+def reading_contents():
+    "reading contents"
+    for k in range(1, 5):
+        A = open('../process/hours-' + str(k) + '.txt')
+        B = A.read()
+        print('contents', B)
+        A.close()
+
+def led_turndown(robot):
+    robot.led.turn_off()
+    print('Robot LED off')
+
+def mius1(robot):
+    robot.motor_controller.right_motor_pwm = robot.motor_controller.right_motor_pwm - 1
+    print(robot.motor_controller.right_motor_pwm)
+
+def forward(robot):
+    robot.motor_controller.drive_pwm(40, 40)
+# ----------------------------------------------------------------------
+# If this module is running at the top level (as opposed to being
+# imported by another module), then call the 'main' function.
+# ----------------------------------------------------------------------
+if __name__ == '__main__':
+    m0.main()

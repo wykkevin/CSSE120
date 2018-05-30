@@ -1,0 +1,239 @@
+"""
+Test 3 problem 1
+
+Authors: David Mutchler, Valerie Galluzzi, Mark Hays, Amanda Stouder,
+         their colleagues and Yuankai Wang.  October 2016.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
+
+import rosegraphics as rg
+
+def main():
+    """ Calls the   TEST   functions in this module. """
+    test_problem1a()
+    test_problem1b()
+
+
+def test_problem1a():
+    """ Tests the    problem1a    function. """
+    # ------------------------------------------------------------------
+    # We supplied tests for this function.
+    # ------------------------------------------------------------------
+    print()
+    print('--------------------------------------------------')
+    print('Testing the   problem1a   function:')
+    print('See the graphics windows that pop up.')
+    print('--------------------------------------------------')
+    win = rg.RoseWindow(500, 500, title="Problem1a test one")
+    clist1 = [rg.Circle(rg.Point(100, 100), 20), rg.Circle(rg.Point(200, 100), 40), rg.Circle(rg.Point(300, 100), 30)]
+    clist2 = [rg.Circle(rg.Point(190, 200), 20), rg.Circle(rg.Point(300, 200), 30)]
+    clist3 = [rg.Circle(rg.Point(150, 300), 30), rg.Circle(rg.Point(300, 300), 30)]
+
+    problem1a([clist1, clist2, clist3],
+              ['red', 'blue', 'green'],
+              win)
+    win.close_on_mouse_click()
+
+    win = rg.RoseWindow(500, 700, title="Problem1a test two")
+    clist4 = [rg.Circle(rg.Point(100, 100), 10), rg.Circle(rg.Point(200, 100), 30), rg.Circle(rg.Point(300, 100), 20)]
+
+    problem1a([clist1, clist2, clist3, clist4],
+              ['red', 'blue'],
+              win)
+    win.close_on_mouse_click()
+
+
+def problem1a(seq_of_seq, colors, window):
+    """
+    What goes in:
+        --seq_of_seq, a sequence of subsequences,
+            where each subsequence consists of only rg.Circles
+        --colors, a non-empty list of colors
+        --window, a rosegraphics window
+    What goes out: Nothing (i.e., None).
+    Side Effects:
+      -- Draws the given circles in all the given subsequences.
+         Must render but NOT close the window.
+      -- In addition, for each subsequence of circles,
+           all the circles in that subsequence should have
+           their fill-color set to the corresponding color
+           in the colors list.
+      -- Also, thec olors lists "wraps" as needed.)
+
+    For example, the first test case above is:
+
+      problem1a([clist1, clist2, clist3],
+                ['red', 'blue', 'green'],
+                win)
+
+    where clist1, clist2, and clist3 are lists of rg.Circles.
+    For that test case, all the rg.Circles in clist1 should
+    have fill-color 'red', all the rg.Circles in clist2 should
+    have fill-color 'blue', and all the rg.Circles in clist3
+    should have fill-color 'green'.
+
+    Another example:  The second test case above is:
+
+      problem1a([clist1, clist2, clist3, clist4],
+                ['red', 'blue'],
+                win)
+
+    where clist1, clist2, clist3 and clist4 are lists of rg.Circles.
+    For that test case, all the rg.Circles in clist1 should
+    have fill-color 'red', all the rg.Circles in clist2 should
+    have fill-color 'blue', and all the rg.Circles in clist3
+    should have fill-color 'red', and all the rg.Circles in clist4
+    should have fill-color 'blue'.
+
+    For more information, see problem1a_pdf.
+
+    Type hints:
+    :type seq_of_seq: [[rg.Circle]]
+    :type colors: [str]
+    :type window: rg.RoseWindow
+    """
+    # ------------------------------------------------------------------
+    # DONE: 2. Implement and test this function.
+    #     The testing code is already written for you (above).
+    #
+    # IMPORTANT: Do this problem in stages -- get PART of the problem
+    #  to work correctly, then get MORE of the problem to work
+    #  correctly, etc.  PARTIAL CREDIT IS AVAILABLE!!!
+    # -----------------------------------------------------------------
+
+    for k in range (len(seq_of_seq)):
+        for i in range (len(seq_of_seq[k])):
+            circle = seq_of_seq[k][i]
+            circle.fill_color = colors[k % len(colors)]
+            circle.attach_to(window)
+            window.render(0.1)
+
+
+def test_problem1b():
+    """ Tests the    problem1b    function. """
+    # ------------------------------------------------------------------
+    # We supplied tests for this function.
+    # ------------------------------------------------------------------
+    print()
+    print('--------------------------------------------------')
+    print('Testing the   problem1b   function:')
+    print('See the graphics windows that pop up.')
+    print('--------------------------------------------------')
+
+    # The window and list for Test 1.
+    win = rg.RoseWindow(500, 400)
+    plist1 = [rg.Point(-10, 40), rg.Point(-10, -40), rg.Point(-10, 500),
+            rg.Point(800, 500), rg.Point(50, 60)]
+
+    title = "This is Test 1 BEFORE calling problem1b.\n"
+    title += "You should see 1 point on the screen (4 are offscreen)."
+    for i in range(len(plist1)):
+        plist1[i].outline_thickness = 10
+        plist1[i].attach_to(win)
+    win.render()
+    win.continue_on_mouse_click(title)
+
+    problem1b(plist1, win)  # Test 1
+
+    title = "This is Test 1 AFTER calling problem1b.\n"
+    title += "You should now see 5 points (4 are only partially visible)."
+    for i in range(len(plist1)):
+        plist1[i].outline_thickness = 10
+        plist1[i].attach_to(win)
+    win.render()
+    win.continue_on_mouse_click(title)
+
+    # Same window but a new list for Test 12.
+
+    plist1 = [rg.Point(-100, 80), rg.Point(10, 400), rg.Point(110, 5000),
+            rg.Point(500, 400), rg.Point(250, 200), rg.Point(300, 300)]
+    saved = []
+    for i in range(len(plist1)):
+        saved.append(plist1[i])
+
+    title = "This is Test 2 BEFORE calling problem1b a second time.\n"
+    title += "You should see 4 RED points on the screen (2 are offscreen)\n"
+    title += "in addition to the 5 BLACK points already there."
+    for i in range(len(plist1)):
+        plist1[i].outline_thickness = 10
+        plist1[i].outline_color = 'red'
+        plist1[i].attach_to(win)
+    win.render()
+    win.continue_on_mouse_click(title)
+
+    problem1b(plist1, win)
+
+    title = "This is Test 2 AFTER calling problem1b a second time.\n"
+    title += "You should now see 6 RED points (4 are only partially visible)\n"
+    title += "in addition to the 5 BLACK points already there."
+    for i in range(len(plist1)):
+        plist1[i].outline_thickness = 10
+        plist1[i].outline_color = 'red'
+        plist1[i].attach_to(win)
+        if not(saved[i] is plist1[i]):
+            print("ERROR: Different point instance than before function call!!")
+            print("The specification says to mutate the Point objects,")
+            print("not the list itself.")
+            print("However, you get most of the credit for this problem")
+            print("if the display works correctly even if you make this mistake.")
+    win.render()
+    win.continue_on_mouse_click(title)
+    win.close()
+
+
+def problem1b(seq_of_pts, window):
+    """
+        What goes in:
+        --seq_of_seq, a sequence containing rg.Point objects
+        --window, a Rosegraphics window
+    What goes out: Nothing (i.e., None)
+    Side Effects:
+      BEFORE this function runs, the given sequence of rg.Points may
+      or may not lie within the given window.
+
+      AFTER this function runs, when the given sequence of rg.Points
+      is then rendered, all the rg.Points ARE within the bounds
+      of the window, as described below.
+
+    This function examines the rg.Points in seq_of_pts. If the position
+    of any rg.Point in the given seq_of_pts is outside the bounds
+    of the given window, this function MUTATES that rg.Point so it is
+    now within the bounds of the window, as follows:
+       It sets its location to the nearest window boundary.
+
+    For example, let our window be 500 pixels wide and 400 pixels tall.
+    Then:
+        The point (-10, 40)     would become    (0, 40)
+        The point (-10, -40)    would become    (0, 0)
+        The point (-10, 500)    would become    (0, 400)
+        The point (800, 500)    would become    (400, 500)
+        The point (50, 50)      would remain    (50, 50)
+
+    For more information, see problem1b_picture.pdf.
+
+    *** THIS FUNCTION SHOULD   *** NOT ***   DRAW ANYTHING.
+        It should only mutate the rg.Points in the given seq_of_pts
+        as indicated above.  The TESTING code does all the drawing.
+
+      :type seq_of_pts: [rg.Point]
+      :type window: rg.RoseWindow
+      """
+    # ------------------------------------------------------------------
+    # DONE: 3. Implement and test this function.
+    #     The testing code is already written for you (above).
+    # -----------------------------------------------------------------
+
+    for k in range (len(seq_of_pts)):
+        if seq_of_pts[k].x < 0:
+            seq_of_pts[k].x = 0
+        if seq_of_pts[k].y < 0:
+            seq_of_pts[k].y = 0
+        if seq_of_pts[k].x > window.width:
+            seq_of_pts[k].x = window.width
+        if seq_of_pts[k].y > window.height:
+            seq_of_pts[k].y = window.height
+
+
+# ----------------------------------------------------------------------
+# Calls  main  to start the ball rolling.
+# ----------------------------------------------------------------------
+main()

@@ -1,0 +1,9 @@
+MODULES_MANAGER_V2
+rosebot.__init__|C:\EclipseWorkspaces\csse120\Rosebot_Examples\src\rosebot\__init__.py
+rosebot.command|C:\EclipseWorkspaces\csse120\Rosebot_Examples\src\rosebot\command.py
+rosebot.communicator|C:\EclipseWorkspaces\csse120\Rosebot_Examples\src\rosebot\communicator.py
+rosebot.faux_rosebot|C:\EclipseWorkspaces\csse120\Rosebot_Examples\src\rosebot\faux_rosebot.py
+rosebot.serial_communicator|C:\EclipseWorkspaces\csse120\Rosebot_Examples\src\rosebot\serial_communicator.py
+rosebot.socket_communicator|C:\EclipseWorkspaces\csse120\Rosebot_Examples\src\rosebot\socket_communicator.py
+rosebot.standard_rosebot|C:\EclipseWorkspaces\csse120\Rosebot_Examples\src\rosebot\standard_rosebot.py
+rosebot_tests|C:\EclipseWorkspaces\csse120\Rosebot_Examples\src\rosebot_tests.py

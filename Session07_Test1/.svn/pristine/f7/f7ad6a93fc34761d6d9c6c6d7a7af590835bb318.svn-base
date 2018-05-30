@@ -1,0 +1,90 @@
+"""
+Test 1, problem 3.
+
+Authors: David Mutchler, Dave Fisher, Valerie Galluzzi, Amanda Stouder,
+         their colleagues and Yuankai Wang.  September 2016.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
+
+import rosegraphics as rg
+
+
+def main():
+    """ Calls the   TEST   functions in this module. """
+    test_problem3()
+
+
+def test_problem3():
+    """ Tests the   problem3   function. """
+    # Test 1 is ALREADY DONE (here).
+    problem3(3, rg.Point(50, 50), 40, 'blue')
+
+    # Test 2 is ALREADY DONE (here).
+    problem3(15, rg.Point(10, 10), 20, 'green')
+
+    # Test 3 is ALREADY DONE (here).
+    problem3(10, rg.Point(50, 30), 30, 'yellow')
+
+
+def problem3(m, point, size, color):
+    """
+    See   problem3_picture.pdf   in this project for pictures
+    that may help you better understand the following specification:
+
+    What comes in:
+      -- A positive integer m.
+      -- An rg.Point.
+      -- A positive integer size.
+      -- A string that can be used as a color, e.g. 'blue'.
+    What goes out:  Nothing (i.e., None).
+    Side effects:
+    -- Constructs and displays an rg.RoseWindow
+         that is 700 wide by 200 tall.
+    -- Draws, on the rg.RoseWindow,   m  rg.Square / rg.Circle pairs,
+       where:
+         -- The first rg.Square:
+              -- is centered at the given rg.Point
+              -- has the given  size  as the length
+                   of each of its sides.
+         -- The first rg.Circle:
+              -- is circumscribed by the first rg.Square
+                   (see  problem3_picture  for what this looks like)
+              -- has the given color as its fill color.
+         -- Each subsequent rg.Square / rg.Circle pair is
+              40 pixels to the right and 10 pixels down from the
+              previous rg.Square / rg.Circle pair.
+
+    -- Waits for the user to click the mouse
+         (with an appropriate message prompting the user to do so),
+         then closes the window.
+
+    Type hints:
+        :type m:      int
+        :type point:  rg.Point
+        :type size:   int
+        :type color:  str
+    """
+    # ------------------------------------------------------------------
+    # TODO: 2. Implement and test this function.
+    #          Tests have been written for you (above).
+    # ------------------------------------------------------------------
+
+    window = rg.RoseWindow(700, 200)
+    for k in range(m):
+        point.x = point.x + 40 * k
+        point.y = point.y + 10 * k
+        square = rg.Square(point, size)
+        circle = rg.Circle(point, size / 2)
+        circle.fill_color = color
+        square.attach_to(window)
+        circle.attach_to(window)
+
+    window.render()
+    window.close_on_mouse_click()
+
+
+
+
+# ----------------------------------------------------------------------
+# Calls  main  to start the ball rolling.
+# ----------------------------------------------------------------------
+main()

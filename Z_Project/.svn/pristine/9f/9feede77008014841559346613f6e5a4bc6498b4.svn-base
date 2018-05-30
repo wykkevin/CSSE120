@@ -1,0 +1,236 @@
+"""
+The Python Capstone Project.
+
+CSSE 120 - Introduction to Software Development.
+Team members: Xiangbei Chen, Yushan Liu, Yuankai Wang and Jingjing Yang.
+
+The primary author of this module is: Yuankai Wang.
+"""
+# DONE: Put the names of ALL team members in the above where indicated.
+#       Put YOUR NAME in the above where indicated.
+
+import m0
+import m1
+import m2
+import m4
+
+import tkinter
+from tkinter import ttk
+import rosebot.standard_rosebot as rb
+import time
+
+class dangernumber():
+    def __init__(self):
+        self.dangernum = None
+        self.returntext = None
+        self.numberlabel = None
+
+def my_frame(root, dc):
+    """
+    Constructs and returns a   ttk.Frame   on the given root window.
+    The frame contains all of this module's widgets.
+    Does NOT   grid   the Frame, since the caller will do that.
+    Also sets up callbacks for this module's widgets.
+
+    The first argument is the  root  window (a tkinter.Tk object)
+    onto which the   ttk.Frame  returned from this function
+    will be placed.  The second argument is the shared DataContainer
+    object that is CONSTRUCTED in m0 but USED in m1, m2, m3 and m4.
+
+    Preconditions:
+      :type root: tkinter.Tk
+      :type dc:   m0.DataContainer
+    """
+
+    wangframe = ttk.Frame(root, padding=100, relief='raised')
+
+#   Spin right
+    spinrightbutton = ttk.Button(wangframe, text='Spin right')
+    spinrightbutton.grid()
+    spinrightbutton['command'] = (lambda:
+                                spinright(dc.robot))
+
+    stopbutton = ttk.Button(wangframe, text='Stop')
+    stopbutton.grid()
+    stopbutton['command'] = (lambda:
+                           stoprobot(dc.robot))
+
+#   Play Entry Tone
+    entrytone = ttk.Entry(wangframe)
+    entrytone.grid()
+
+    playentrytonebutton = ttk.Button(wangframe, text='Play the tone entered')
+    playentrytonebutton.grid()
+    playentrytonebutton['command'] = (lambda:
+                                    playthetoneentered(dc.robot, entrytone))
+
+
+#   Get reflectance sensor
+    reflec_sen_button = ttk.Button(wangframe, text='get reflectance sensors')
+    reflec_sen_button.grid()
+    reflec_sen_button['command'] = lambda:getresen(dc.robot)
+
+#   Stop when enter a black space
+    dangerrangeentrylebal = ttk.Label(wangframe, text='Please enter a number for the sensor:')
+    dangerrangeentrylebal.grid()
+
+    sensordanger = dangernumber()
+
+    dangerrangeentry = ttk.Entry(wangframe)
+    dangerrangeentry.grid()
+    dangerrangeentry.bind('<Return>', lambda event: returndangerentry(event, dangerrangeentry, sensordanger))
+
+    dangerrangelabel = ttk.Label(wangframe)
+    dangerrangelabel.grid()
+    sensordanger.numberlabel = dangerrangelabel
+
+    stop_if_dangerous_button = ttk.Button(wangframe, text='Stop if in danger')
+    stop_if_dangerous_button.grid()
+    stop_if_dangerous_button['command'] = lambda:stop_if_dangerous(dc.robot, dangerrangeentry, sensordanger)
+
+#   Run follow a black line
+    runfollowspeedlabel = ttk.Label(wangframe, text='Enter an initial speed')
+    runfollowspeedlabel.grid()
+
+    runfollowspeedEntry = ttk.Entry(wangframe)
+    runfollowspeedEntry.grid()
+
+    runfollowturnspeedlabel = ttk.Label(wangframe, text='Enter the add of speed while turning')
+    runfollowturnspeedlabel.grid()
+
+    runfollowturnspeedEntry = ttk.Entry(wangframe)
+    runfollowturnspeedEntry.grid()
+
+    thresholdlabel = ttk.Label(wangframe, text='Enter a threshold of black and white')
+    thresholdlabel.grid()
+
+    thresholdEntry = ttk.Entry(wangframe)
+    thresholdEntry.grid()
+
+    allowederrorlabel = ttk.Label(wangframe, text='Enter allowed error')
+    allowederrorlabel.grid()
+
+    allowederrorEntry = ttk.Entry(wangframe)
+    allowederrorEntry.grid()
+
+    runfollowcurvyblacklinebutton = ttk.Button(wangframe, text='Run follow a curvy black line')
+    runfollowcurvyblacklinebutton.grid()
+    runfollowcurvyblacklinebutton['command'] = lambda:runblackline(dc.robot, runfollowspeedEntry, runfollowturnspeedEntry, thresholdEntry, allowederrorEntry)
+
+#   Stop when bump
+    stopwhenbumpbutton = ttk.Button(wangframe, text='Stop when bump')
+    stopwhenbumpbutton.grid()
+    stopwhenbumpbutton['command'] = lambda:stopwhenbump(dc.robot)
+
+#   Stop according to proximity sensor
+    getproximitysensorbutton = ttk.Button(wangframe, text='Get proximity sensor')
+    getproximitysensorbutton.grid()
+    getproximitysensorbutton['command'] = lambda:getproximitysensor(dc.robot)
+
+    proximitythresholdlabel = ttk.Label(wangframe, text='Enter a the threshold of threshold')
+    proximitythresholdlabel.grid()
+
+    proximitythresholdEntry = ttk.Entry(wangframe)
+    proximitythresholdEntry.grid()
+
+    stopproximitysensorbutton = ttk.Button(wangframe, text='Stop when it is near something')
+    stopproximitysensorbutton.grid()
+    stopproximitysensorbutton['command'] = lambda:stopproximitysensor(dc.robot, proximitythresholdEntry)
+
+
+    return wangframe
+
+def spinright(robot):
+    robot.motor_controller.right_motor_pwm = 10
+
+def stoprobot(robot):
+    robot.motor_controller.stop()
+
+def playthetoneentered(robot, entrytone):
+    tone = entrytone.get()
+    robot.buzzer.play_tone(tone)
+    print('Playing tone:', tone)
+
+def getresen(robot):
+    print('the left sensor is:', robot.sensor_reader.left_reflectance_sensor.read())
+    print('the middle sensor is:', robot.sensor_reader.middle_reflectance_sensor.read())
+    print('the right sensor is:', robot.sensor_reader.right_reflectance_sensor.read())
+
+def stop_if_dangerous(robot, entry, dangerclass):
+    dangerclass.dangernum = entry.get()
+    dangernumber = int(entry.get())
+    while True:
+        if robot.sensor_reader.left_reflectance_sensor.read() < dangernumber  or robot.sensor_reader.middle_reflectance_sensor.read() < dangernumber or robot.sensor_reader.right_reflectance_sensor.read() < dangernumber:
+            break;
+    robot.motor_controller.stop()
+    print('It is dangerous! I stopped.')
+    return dangerclass.dangernum
+
+def returndangerentry(event, entry, sensordanger):
+    sensordanger.number = entry.get()
+    sensordanger.numberlabel['text'] = 'The number is {}'.format(int(sensordanger.number))
+
+def runblackline(robot, entryspeed, entrychangespeed, entrythreshold, entryerror):
+    speed = int(entryspeed.get())
+    changespeed = int(entrychangespeed.get())
+    threshold = int(entrythreshold.get())
+    error = int(entryerror.get())
+    robot.motor_controller.drive_pwm(speed, speed)
+    while True:
+        if robot.sensor_reader.left_reflectance_sensor.read() < (threshold - error):
+            robot.motor_controller.drive_pwm(speed + changespeed, speed)
+        if robot.sensor_reader.right_reflectance_sensor.read() < (threshold - error):
+            robot.motor_controller.drive_pwm(speed, speed + changespeed)
+        if robot.sensor_reader.right_reflectance_sensor.read() > (threshold + error) and robot.sensor_reader.left_reflectance_sensor.read() > (threshold + error):
+            robot.motor_controller.drive_pwm(speed, speed)
+        if robot.sensor_reader.left_reflectance_sensor.read() < (threshold + error) and robot.sensor_reader.middle_reflectance_sensor.read() < (threshold + error) and robot.sensor_reader.right_reflectance_sensor.read() < (threshold + error):
+            break
+#     while True:
+#         if robot.sensor_reader.middle_reflectance_sensor.read() < (threshold - error):
+#             robot.motor_controller.drive_pwm(speed, speed + changespeed)
+#         if robot.sensor_reader.middle_reflectance_sensor.read() > (threshold + error):
+#             robot.motor_controller.drive_pwm(speed + changespeed, speed)
+#         if robot.sensor_reader.left_reflectance_sensor.read() < (threshold + error) and robot.sensor_reader.middle_reflectance_sensor.read() < (threshold + error) and robot.sensor_reader.right_reflectance_sensor.read() < (threshold + error):
+#             break
+    robot.motor_controller.stop()
+    print('stop')
+
+def stopwhenbump(robot):
+    robot.motor_controller.drive_pwm(40, 40)
+    while True:
+        if robot.sensor_reader.left_bump_sensor.read() == 0 or robot.sensor_reader.right_bump_sensor.read() == 0:
+            break
+    robot.motor_controller.stop()
+    print('I bumped into something.')
+
+def getproximitysensor(robot):
+    print(robot.sensor_reader.left_proximity_sensor.read())
+    print(robot.sensor_reader.front_proximity_sensor.read())
+    print(robot.sensor_reader.right_proximity_sensor.read())
+
+def stopproximitysensor(robot, entrythreshold):
+    threshold = int(entrythreshold.get())
+    while True:
+        if robot.sensor_reader.front_proximity_sensor.read() > threshold:
+            robot.motor_controller.stop()
+            break
+        if robot.sensor_reader.left_proximity_sensor.read() > threshold:
+            robot.motor_controller.drive_pwm(40, -40)
+            time.sleep(1)
+            break
+        if robot.sensor_reader.right_proximity_sensor.read() > threshold:
+            robot.motor_controller.drive_pwm(-40, 40)
+            time.sleep(1)
+            break
+    robot.motor_controller.stop()
+    print('There is something near.')
+
+    print()
+
+
+# ----------------------------------------------------------------------
+# If this module is running at the top level (as opposed to being
+# imported by another module), then call the 'main' function.
+# ----------------------------------------------------------------------
+if __name__ == '__main__':
+    m0.main()

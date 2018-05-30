@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="167" key="HistoryTableProvider.HistoryDialog.Date"/>
+	<item value="760" key="HistoryDialog.location.x"/>
+	<item value="0" key="UpdateDialogWithConflictHandling.location.y"/>
+	<item value="178" key="HistoryDialog.location.y"/>
+	<item value="442" key="RevertDialog.size.y"/>
+	<item value="963" key="RevertDialog.size.x"/>
+	<item value="46" key="HistoryTableProvider.SVNHistoryPage.Revision"/>
+	<item value="1" key="ResolveConflictDialog.lastChoice"/>
+	<item value="229" key="HistoryTableProvider.SVNHistoryPage.Comment"/>
+	<item value="200" key="HistoryDialog.weights.0"/>
+	<item value="132" key="HistoryTableProvider.HistoryDialog.Author"/>
+	<item value="227" key="CommitDialog.location.y"/>
+	<item value="275" key="CommitDialog.location.x"/>
+	<item value="200" key="HistoryDialog.weights.2"/>
+	<item value="200" key="HistoryDialog.weights.1"/>
+	<item value="500" key="CommitDialog.weights.0"/>
+	<item value="199" key="MarkResolvedDialog.location.y"/>
+	<item value="479" key="RevertDialog.location.x"/>
+	<item value="500" key="CommitDialog.weights.1"/>
+	<item value="479" key="MarkResolvedDialog.location.x"/>
+	<item value="888" key="UpdateDialogWithConflictHandling.size.y"/>
+	<item value="963" key="MarkResolvedDialog.size.x"/>
+	<item value="67" key="HistoryTableProvider.HistoryDialog.Revision"/>
+	<item value="475" key="MarkResolvedDialog.size.y"/>
+	<item value="221" key="RevertDialog.location.y"/>
+	<item value="502" key="CommitDialog.size.y"/>
+	<item value="963" key="UpdateDialogWithConflictHandling.size.x"/>
+	<item value="1339" key="CommitDialog.size.x"/>
+	<item value="115" key="HistoryTableProvider.SVNHistoryPage.Date"/>
+	<item value="92" key="HistoryTableProvider.SVNHistoryPage.Author"/>
+	<item value="479" key="UpdateDialogWithConflictHandling.location.x"/>
+	<item value="897" key="HistoryDialog.size.x"/>
+	<item value="717" key="HistoryDialog.size.y"/>
+	<item value="332" key="HistoryTableProvider.HistoryDialog.Comment"/>
+	<section name="CommitWizard">
+		<item value="500" key="VWeight2"/>
+		<item value="500" key="VWeight1"/>
+		<item value="false" key="ShowCompare"/>
+	</section>
+</section>

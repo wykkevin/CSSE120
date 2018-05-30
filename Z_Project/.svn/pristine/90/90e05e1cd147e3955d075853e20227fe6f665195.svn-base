@@ -1,0 +1,46 @@
+2 10/27 sprint1
+Add frame
+Add spinrightbutton and let it work
+Working on m0 to make it work
+
+1.5 10/30 sprint1
+Add stop button
+Add entry button
+Add play entered tone button
+Add two speed of wheel variable on m0
+
+2 10/31 sprint1
+Change variables in m0
+Help teammates fix bugs (most time)
+Begin working on feature 7
+
+2 11/1 sprint1
+Finish feature 7
+Add number of sensor that is danger Entry button
+Add changable labels
+Help teammates
+Try to work on feature 9
+
+2 11/2 sprint2
+test all the codes
+write feature 9
+help teammate
+test sensor
+
+2 11/2 sprint2
+work on run follow a black line and test
+work on bump
+
+2 11/3 sprint2
+Add proximity sensor
+Learn camera pid bangbang
+
+0.5 11/5 sprint2
+Add more roots and frames to make it beautiful
+
+2 11/5 sprint2
+Add pid control method of run follow a black line
+
+1 11/6 sprint2
+Add menu
+Add emotion expression

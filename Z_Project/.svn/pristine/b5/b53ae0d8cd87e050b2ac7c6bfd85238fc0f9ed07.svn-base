@@ -1,0 +1,15 @@
+2 10/27
+add frame 
+add spinButton
+add connecttion to robot
+
+
+1.5 10/30
+add spin left button
+add random speed button for left and right wheels
+add random tone button for the buzzer
+
+2 10/31
+def a function that control the robot in certain time and speed that plug in
+add two entries for people to plug in
+add button and labels

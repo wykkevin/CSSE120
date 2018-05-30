@@ -1,0 +1,21 @@
+-- VERSION_4
+-- START DISKCACHE_2
+C:\EclipseWorkspaces\csse120\.metadata\.plugins\org.eclipse.core.resources\.projects\Session21_MoreTest3Practice\com.python.pydev.analysis\v2_indexcache
+m1|1476990245453585000|C:\EclipseWorkspaces\csse120\Session21_MoreTest3Practice\src\m1.py
+m2|1476989785330447000|C:\EclipseWorkspaces\csse120\Session21_MoreTest3Practice\src\m2.py
+-- END DISKCACHE
+-- START DICTIONARY
+2
+1=m1
+2=m2
+-- END DICTIONARY
+-- START TREE 1
+4
+goo|1|good_input!10@
+mai|2|main!10@main!18@
+pro|1|problem2a!18@
+tes|2|test_good_input!10@test_problem2a!18@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE

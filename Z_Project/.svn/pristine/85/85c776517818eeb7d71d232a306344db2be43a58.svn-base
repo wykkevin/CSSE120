@@ -1,0 +1,132 @@
+"""
+The Python Capstone Project.
+
+CSSE 120 - Introduction to Software Development.
+Team members: Chen Xiangbei, Liu Yushan, Wang Yuankai, Yang Jingjing (all of them).
+
+The primary author of this module is: Liu Yushan.
+"""
+# DONE: Put the names of ALL team members in the above where indicated.
+#       Put YOUR NAME in the above where indicated.
+
+import m0
+import m1
+import m3
+import m4
+
+import tkinter
+from tkinter import ttk
+import rosebot.standard_rosebot as rb
+import time
+
+
+def my_frame(root, dc):
+    """
+    Constructs and returns a   ttk.Frame   on the given root window.
+    The frame contains all of this module's widgets.
+    Does NOT   grid   the Frame, since the caller will do that.
+    Also sets up callbacks for this module's widgets.
+
+    The first argument is the  root  window (a tkinter.Tk object)
+    onto which the   ttk.Frame  returned from this function
+    will be placed.  The second argument is the shared DataContainer
+    object that is CONSTRUCTED in m0 but USED in m1, m2, m3 and m4.
+
+    Preconditions:
+      :type root: tkinter.Tk
+      :type dc:   m0.DataContainer
+    """
+
+    frame2 = ttk.Frame(root, padding=100, relief='raised')
+
+#     label1 = ttk.Label(frame2)
+#     label1['text'] = 'Robot Tone is:' + str(Tone1(dc.robot))
+#     label1.grid()
+#
+#     leftbuttn.grid()
+#     leftbuttoon = ttk.Button(frame2, text='Spin right')
+#     leftbutton['command'] = (lambda:
+#                                 spinleft(dc.robot))
+#
+#
+#     randomize_button = ttk.Button(frame2, text='Randomize')
+#     randomize_button.grid()
+#     randomize_button['command'] = (lambda:
+#                                    random1(dc.robot))
+#
+#     randomize_button = ttk.Button(frame2, text='Tone')
+#     randomize_button.grid()
+#     randomize_button['command'] = (lambda:
+#                                    Tone1(dc.robot))
+
+    label1 = ttk.Label(frame2)
+    label1['text'] = 'Speed is: '
+    label1.grid()
+
+    entry1 = ttk.Entry(frame2, width=8)
+    entry1.grid()
+
+    label2 = ttk.Label(frame2)
+    label2['text'] = 'Time is: '
+    label2.grid()
+
+    entry2 = ttk.Entry(frame2, width=8)
+    entry2.grid()
+
+    button1 = ttk.Button(frame2, text='RUN')
+    button1.grid()
+    button1['command'] = (lambda:RUN(dc.robot, entry1, entry2))
+
+    root.bind_all('<KeyPress>', lambda event: pressed_a_key(event))
+    root.bind_all('<KeyRelease>', lambda event: released_a_key(event))
+
+    root.bind_all('<Key-1>', lambda event: gogo(dc.robot, event))
+
+
+    return frame2
+
+# def spinleft(robot):
+#     robot.motor_controller.drive_pwm(20, 0)
+#
+# def random1(robot):
+#     """
+#     Randomizes the numbers in both  Label_Plus_Number  objects.
+#     Updates their displays.
+#     """
+#
+#     robot.motor_controller.left_motor_pwm = random.randrange(-255, 256)
+#     robot.motor_controller.right_motor_pwm = random.randrange(-255, 256)
+#     print('The speed of left wheel is:', str(robot.motor_controller.left_motor_pwm))
+#     print('The speed of rght wheel is:', str(robot.motor_controller.right_motor_pwm))
+#
+# def Tone1(robot):
+#     a = random.randrange(0, 80)
+#     robot.buzzer.play_tone(a)
+#     print(a)
+
+
+def RUN(robot, entry1, entry2):
+    A = int(entry1.get())
+    robot.motor_controller.drive_pwm(A, A)
+    B = int(entry2.get())
+    time.sleep(B)
+    robot.motor_controller.stop()
+    print('the speed is ', A)
+    print('the time is ', B)
+
+def gogo(robot, event):
+    while(True):
+        robot.motor_controller.drive_pwm(10 * int(str(event)), 10 * int(str(event)))
+        print('speed is:', str(10 * int(event)))
+
+
+def pressed_a_key(event):
+    print('You pressed the', event.keysym, 'key')
+def released_a_key(event):
+    print('You released the', event.keysym, 'key')
+# ----------------------------------------------------------------------
+# If this module is running at the top level (as opposed to being
+# imported by another module), then call the 'main' function.
+# ----------------------------------------------------------------------
+if __name__ == '__main__':
+    m0.main()

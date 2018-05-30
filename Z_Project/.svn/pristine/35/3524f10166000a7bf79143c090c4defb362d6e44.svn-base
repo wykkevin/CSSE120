@@ -1,0 +1,191 @@
+"""
+The Python Capstone Project.
+
+CSSE 120 - Introduction to Software Development.
+Team members: Chen Xiangbei, Liu Yushan, Wang Yuankai, Yang Jingjing (all of them).
+
+The primary author of this module is: Liu Yushan.
+"""
+# DONE: Put the names of ALL team members in the above where indicated.
+#       Put YOUR NAME in the above where indicated.
+
+import m0
+import m1
+import m3
+import m4
+
+import tkinter
+from tkinter import ttk
+import rosebot.standard_rosebot as rb
+import time
+import random
+
+class Louis():
+    def __init__(self):
+        self.leftwheel = 0
+        self.rightwheel = 0
+        self.number2 = 0
+        self.entry_box1 = None
+        self.entry_box2 = None
+        self.speed_label = None
+        self.time_label = None
+def my_frame(root, dc):
+    """
+    Constructs and returns a   ttk.Frame   on the given root window.
+    The frame contains all of this module's widgets.
+    Does NOT   grid   the Frame, since the caller will do that.
+    Also sets up callbacks for this module's widgets.
+
+    The first argument is the  root  window (a tkinter.Tk object)
+    onto which the   ttk.Frame  returned from this function
+    will be placed.  The second argument is the shared DataContainer
+    object that is CONSTRUCTED in m0 but USED in m1, m2, m3 and m4.
+
+    Preconditions:
+      :type root: tkinter.Tk
+      :type dc:   m0.DataContainer
+    """
+    louis = Louis()
+    frame2 = ttk.Frame(root, padding=100, relief='raised')
+
+
+    speed_text = 'Left Wheel {}'.format(louis.leftwheel), 'Right Wheel {}'.format(louis.rightwheel)
+    speed_label = ttk.Label(frame2, text=speed_text)
+    speed_label.grid()
+    louis.speed_label = speed_label
+
+    entry1 = ttk.Entry(frame2, width=8)
+    entry1.grid()
+    louis.entry_box1 = entry1
+
+    time_text = 'The time is {}'.format(louis.number2)
+    time_label = ttk.Label(frame2, text=time_text)
+    time_label.grid()
+    louis.time_label = time_label
+
+    entry2 = ttk.Entry(frame2, width=8)
+    entry2.grid()
+    louis.entry_box2 = entry2
+
+    button1 = ttk.Button(frame2, text='RUN')
+    button1.grid()
+    button1['command'] = (lambda:RUN(dc.robot, entry1, entry2, louis))
+
+    button2 = ttk.Button(frame2, text='Reset Speed and Time')
+    button2.grid()
+    button2['command'] = (lambda:Reset(dc.robot, louis))
+
+    button3 = ttk.Button(frame2, text='sing')
+    button3.grid()
+    button3['command'] = (lambda:Sing(dc.robot))
+
+    root.bind_all('<Key-w>', lambda event: go_forward(dc.robot, louis))
+    root.bind_all('<Key-a>', lambda event: go_left(dc.robot, louis))
+    root.bind_all('<Key-d>', lambda event: go_right(dc.robot, louis))
+    root.bind_all('<Key-s>', lambda event: go_backward(dc.robot, louis))
+    root.bind_all('<Key-q>', lambda event: go_stop(dc.robot, louis))
+
+    button4 = ttk.Button(frame2, text='Random Run')
+    button4.grid()
+    button4['command'] = (lambda:runwindow(dc.robot))
+
+    return frame2
+
+
+
+def RUN(robot, entry1, entry2, louis):
+    A = int(entry1.get())
+    louis.leftwheel = A
+    louis.rightwheel = A
+    louis.speed_label['text'] = 'Left Wheel {}'.format(louis.leftwheel), 'Right Wheel {}'.format(louis.rightwheel)
+    print('the speed is ', A)
+    robot.motor_controller.drive_pwm(A, A)
+    B = int(entry2.get())
+    louis.number2 = B
+    louis.time_label['text'] = 'The time is {}'.format(louis.number2)
+    print('the time is ', B)
+    time.sleep(B)
+    robot.motor_controller.stop()
+
+def Reset(robot, louis):
+    louis.leftwheel = 80
+    louis.rightwheel = 80
+    louis.speed_label['text'] = 'Left Wheel {}'.format(louis.leftwheel), 'Right Wheel {}'.format(louis.rightwheel)
+    print('the speed is ', 80)
+    robot.motor_controller.drive_pwm(80, 80)
+    louis.number2 = 10
+    louis.time_label['text'] = 'The time is {}'.format(louis.number2)
+    print('the time is ', 10)
+    time.sleep(10)
+    robot.motor_controller.stop()
+
+def go_forward(robot, louis):
+    louis.leftwheel = 80
+    louis.rightwheel = 80
+    louis.speed_label['text'] = 'Left Wheel {}'.format(louis.leftwheel), 'Right Wheel {}'.format(louis.rightwheel)
+    print('the robot go forward')
+    robot.motor_controller.drive_pwm(80, 80)
+def go_left(robot, louis):
+    louis.leftwheel = 0
+    louis.rightwheel = 80
+    louis.speed_label['text'] = 'Left Wheel {}'.format(louis.leftwheel), 'Right Wheel {}'.format(louis.rightwheel)
+    print('the robot go left')
+    robot.motor_controller.drive_pwm(0, 80)
+def go_right(robot, louis):
+    louis.leftwheel = 80
+    louis.rightwheel = 0
+    louis.speed_label['text'] = 'Left Wheel {}'.format(louis.leftwheel), 'Right Wheel {}'.format(louis.rightwheel)
+    print('the robot go forward')
+    robot.motor_controller.drive_pwm(80, 0)
+def go_backward(robot, louis):
+    louis.leftwheel = -80
+    louis.rightwheel = -80
+    louis.speed_label['text'] = 'Left Wheel {}'.format(louis.leftwheel), 'Right Wheel {}'.format(louis.rightwheel)
+    print('the robot go forward')
+    robot.motor_controller.drive_pwm(-80, -80)
+def go_stop(robot, louis):
+    louis.leftwheel = 0
+    louis.rightwheel = 0
+    louis.speed_label['text'] = 'Left Wheel {}'.format(louis.leftwheel), 'Right Wheel {}'.format(louis.rightwheel)
+    print('the robot stop')
+    robot.motor_controller.stop()
+def Sing(robot):
+    print('sing a song randomly')
+    tone1 = [31, 33, 35, 36, 38, 40, 42, 43, 45, 47, 49, 50]
+    jie = [0.5, 0.5, 0.25, 0.25, 0.5, 0.5, 0.5, 0.5, 0.25, 0.25, 0.25, 0.5, 0.5, 0.5, 0.25, 0.25, 0.5, 0.5, 0.5, 0.25, 0.25, 0.25, 0.5, 0.5]
+    for k in range(len(jie)):
+        m = random.randrange(0, len(tone1))
+        robot.buzzer.play_tone(tone1[m])
+        time.sleep(jie[k])
+    robot.buzzer.stop()
+
+def runwindow(robot):
+    root2 = tkinter.Toplevel()
+    frame3 = ttk.Frame(root2, padding=30)
+    frame3.grid()
+    button_run = ttk.Button(frame3, text='Run')
+    button_run.grid()
+    button_run['command'] = (lambda:randrun(robot))
+    button_stop = ttk.Button(frame3, text='Stop')
+    button_stop.grid()
+    button_stop['command'] = (lambda:stop1(robot))
+def randrun(robot):
+    Louis = 0
+    while True:
+        robot.motor_controller.left_motor_pwm = random.randrange(-255, 256)
+        robot.motor_controller.right_motor_pwm = random.randrange(-255, 256)
+        time.sleep(3)
+        print(1)
+        Louis += 1
+        if Louis == 10:
+            break
+    print('Stop Run')
+def stop1(robot):
+    robot.motor_controller.stop()
+    print('Stop Run')
+# ----------------------------------------------------------------------
+# If this module is running at the top level (as opposed to being
+# imported by another module), then call the 'main' function.
+# ----------------------------------------------------------------------
+if __name__ == '__main__':
+    m0.main()

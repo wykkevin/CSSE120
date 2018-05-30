@@ -1,0 +1,98 @@
+"""
+The Python Capstone Project.
+
+CSSE 120 - Introduction to Software Development.
+Team members: Xiangbei Chen, Yushan Liu, Yuankai Wang and Jingjing Yang.
+
+The primary author of this module is: Yuankai Wang.
+"""
+# DONE: Put the names of ALL team members in the above where indicated.
+#       Put YOUR NAME in the above where indicated.
+
+import m0
+import m1
+import m2
+import m4
+
+import tkinter
+from tkinter import ttk
+import rosebot.standard_rosebot as rb
+
+
+def my_frame(root, dc):
+    """
+    Constructs and returns a   ttk.Frame   on the given root window.
+    The frame contains all of this module's widgets.
+    Does NOT   grid   the Frame, since the caller will do that.
+    Also sets up callbacks for this module's widgets.
+
+    The first argument is the  root  window (a tkinter.Tk object)
+    onto which the   ttk.Frame  returned from this function
+    will be placed.  The second argument is the shared DataContainer
+    object that is CONSTRUCTED in m0 but USED in m1, m2, m3 and m4.
+
+    Preconditions:
+      :type root: tkinter.Tk
+      :type dc:   m0.DataContainer
+    """
+
+    wangframe = ttk.Frame(root, padding=100, relief='raised')
+
+    spinrightbutton = ttk.Button(wangframe, text='Spin right')
+    spinrightbutton.grid()
+    spinrightbutton['command'] = (lambda:
+                                spinright(dc.robot))
+#
+#     stopbutton = ttk.Button(wangframe, text='Stop')
+#     stopbutton.grid()
+#     stopbutton['command'] = (lambda:
+#                            stoprobot(dc.robot))
+#
+#     entrytone = ttk.Entry(wangframe)
+#     entrytone.grid()
+#
+#     playentrytonebutton = ttk.Button(wangframe, text='Play the tone entered')
+#     playentrytonebutton.grid()
+#     playentrytonebutton['command'] = (lambda:
+#                                     playthetoneentered(dc.robot, entrytone))
+
+
+    l_reflec_sen_button = ttk.Button(wangframe,text='get the left reflectance sensor')
+    dc.robot.sensor_reader.left_reflectance_sensor
+    l_reflec_sen_button.grid()
+    l_reflec_sen_button['command'] = 
+    
+    m_reflec_sen_button = ttk.Button(wangframed,text='get the left reflectance sensor')
+    dc.robot.sensor_reader.middle_reflectance_sensor
+    m_reflec_sen_button.grid()
+    r_reflec_sen_button = ttk.Button(wangframed,text='get the left reflectance sensor')
+    dc.robot.sensor_reader.right_reflectance_sensor
+    r_reflec_sen_button.grid()
+    
+    stop_if_dangerous_button=ttk.Button(wangframe,text='stop if in danger')
+
+
+
+    return wangframe
+
+def spinright(robot):
+    robot.motor_controller.right_motor_pwm=10
+
+def stoprobot(robot):
+    robot.motor_controller.left_motor_pwm = 0
+    robot.motor_controller.right_motor_pwm = 0
+    print('The robot stops.')
+
+def playthetoneentered(robot, entrytone):
+    tone = entrytone.get()
+    robot.buzzer.play_tone(tone)
+    print('Playing tone:', tone)
+
+
+
+# ----------------------------------------------------------------------
+# If this module is running at the top level (as opposed to being
+# imported by another module), then call the 'main' function.
+# ----------------------------------------------------------------------
+if __name__ == '__main__':
+    m0.main()
